@@ -192,3 +192,24 @@ Route::post('/random', [RandomController::class, 'generate']);
   </button>
 @endif
 ```
+
+# todo
+## δημιουργία Model
+`php artisan make:model Todo`  
+`php artisan make:migration create_todos_table`
+(το migration είναι πιθανο να μπορούσα να το φτιάξω με μια μονο έντολη)
+#### database\migrations\2025_06_15_200923_create_todos_table.php
+```php
+    public function up(): void
+    {
+        Schema::create('todos', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('body');
+            $table->boolean('completed')->default(false);
+            $table->timestamps();
+        });
+    }
+```
+`php artisan migrate:fresh`  **προσοχή στην εντολη fresh**
+τώρα η βάση δεδομένων μου βρίσκετε στο `E:\coding\simpleToDo\database\database.sqlite` και την συνδέω με τον SQLiteStudio  

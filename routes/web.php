@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RandomController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Todo;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,3 +14,9 @@ Route::get('/random', function () {
 });
 // Handle the form submission
 Route::post('/random', [RandomController::class, 'generate']);
+
+Route::get('/todos', function() {
+  return view('todos', [
+    'todos' => Todo::all()
+  ]);
+});
