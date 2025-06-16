@@ -16,6 +16,7 @@
     <div id="sidebar" class="w-1/5 bg-gray-100 p-4">
        <x-btn href="/">home</x-btn>
        <x-btn href="/random">random</x-btn>
+       <x-btn href="/todos">todos</x-btn>
     </div>
 
     <div id="content" class="w-4/5 p-4">
