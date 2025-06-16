@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RandomController;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\WeatherController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Todo;
 
@@ -36,3 +37,5 @@ Route::get('/todos/{id}/edit', function ($id) {
 });
 
 Route::patch('/todos/{id}/toggle', [TodoController::class, 'toggle']);
+
+Route::get('/weather', [WeatherController::class, 'weather']);

@@ -17,6 +17,7 @@
        <x-btn href="/">home</x-btn>
        <x-btn href="/random">random</x-btn>
        <x-btn href="/todos">todos</x-btn>
+       <x-btn href="/weather">weather</x-btn>
     </div>
 
     <div id="content" class="w-4/5 p-4">
