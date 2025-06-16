@@ -79,3 +79,21 @@ You can create the SQLite file using:
 Then visit http://localhost:8000 in your browser.
 
 ## Screenshots
+
+### 1. Welcome Page
+![Welcome Page](https://github.com/alkisax/simpleTodoLaravel/raw/main/public/screenshots/1.welcome.png)
+
+### 2. Random Number Generator
+![Random Generator](https://github.com/alkisax/simpleTodoLaravel/raw/main/public/screenshots/2.random.png)
+
+### 3. Todo List (Index)
+![Todo Index](https://github.com/alkisax/simpleTodoLaravel/raw/main/public/screenshots/3.index.todo.png)
+
+### 4. Create Todo
+![Create Todo](https://github.com/alkisax/simpleTodoLaravel/raw/main/public/screenshots/4.create.todo.png)
+
+### 5. Update Todo
+![Update Todo](https://github.com/alkisax/simpleTodoLaravel/raw/main/public/screenshots/5.change.todo.png)
+
+### 6. Weather Integration
+![Weather](https://github.com/alkisax/simpleTodoLaravel/raw/main/public/screenshots/6.weather.png)
