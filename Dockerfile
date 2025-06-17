@@ -1,11 +1,8 @@
 FROM php:8.2-fpm
 
-# Install system dependencies, including libsqlite3-dev
-RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-    libzip-dev zip unzip curl libonig-dev libpng-dev libjpeg-dev libfreetype6-dev libsqlite3-dev
-
-# Configure zip extension explicitly (recommended)
-RUN docker-php-ext-configure zip
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libzip-dev zip unzip curl libonig-dev libpng-dev libjpeg-dev libfreetype6-dev sqlite3
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_sqlite mbstring zip exif pcntl
@@ -18,17 +15,15 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . .
 
-# Install PHP dependencies & optimize autoloader
+# Install PHP deps & optimize
 RUN composer install --no-dev --optimize-autoloader
 
-# Generate app key
-RUN php artisan key:generate
-
-# Run migrations
+# Run migrations (optional, if you want migrations to run on build)
+# You can remove this and run migrations separately
 RUN php artisan migrate --force
 
 # Expose port
 EXPOSE 10000
 
-# Start the app
+# Start the app (app key must be set via environment variable on Render)
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
