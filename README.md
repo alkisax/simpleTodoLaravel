@@ -2,6 +2,11 @@
 
 A practical Laravel Blade project demonstrating foundational concepts of PHP and Laravel through a full-stack web application.
 
+1. app is live at [simpleToDoLaravel](https://simpletodolaravel.onrender.com)  
+2. [README.md](https://github.com/alkisax/simpleTodoLaravel/blob/main/README.md)  
+3. step by step instructions md of how the app was made [Instructions](https://github.com/alkisax/simpleTodoLaravel/blob/main/todoInstructionsLaravel.md)
+
+
 ## Features
 
 ### 1. Welcome Page

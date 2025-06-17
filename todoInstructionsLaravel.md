@@ -964,3 +964,63 @@ class WeatherController extends Controller
   </div>
 </x-layout>
 ```
+
+
+# deploy
+### How We Used This to Deploy on Render Without Running Docker Locally
+- You created a Dockerfile in your project root that describes how to build your app container with PHP, dependencies, extensions, and Laravel setup.
+
+- Pushed your code (including Dockerfile) to a Git repository (e.g., GitHub).
+
+In Render dashboard:
+
+Created a new Web Service (or similar service type).
+Selected “Docker” as the environment, linked your Git repo.
+Render automatically detected the Dockerfile and built your container in their cloud environment.
+Render exposed the app on a public URL, mapped to port 10000 as specified in your Dockerfile.
+Environment variables (like APP_KEY) are set inside Render’s dashboard — you don’t need .env file locally or inside the container during build. The Laravel app reads those at runtime.
+Render builds your image, runs migrations on build, and starts your Laravel app inside the container — all without you needing Docker installed or running locally.
+
+### Summary
+Dockerfile automates building a portable container image for your app.
+
+You fixed the missing libsqlite3-dev dependency so PHP could build required extensions (pdo_sqlite).
+
+The Dockerfile copies your app, installs PHP deps with Composer, runs DB migrations, and serves Laravel on port 10000.
+
+Render reads your Dockerfile, builds your app container, and deploys it on the cloud automatically.
+
+Environment variables are managed by Render — no local .env needed.
+
+- ο υπολογιστής μου δεν μπορεί να εγκαταστήσει το docker αλλα αυτό δεν ήταν προβλημα γιατί το render μπορεί να τρέξει τον δικό του docker αρκεί να βρέι ένα αρχείο Dockerfile στο root
+- το αρχείο Dockerfile το ευτιαξα με την βοηθεια του gpt
+#### Dockerfile
+```
+FROM php:8.2-fpm
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libzip-dev zip unzip curl libonig-dev libpng-dev libjpeg-dev libfreetype6-dev libsqlite3-dev
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo pdo_sqlite mbstring zip exif pcntl
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+# Copy project files
+COPY . .
+
+# Install PHP deps & optimize
+RUN composer install --no-dev --optimize-autoloader
+
+# Run migrations (optional, if you want migrations to run on build)
+RUN php artisan migrate --force
+
+# Expose port
+EXPOSE 10000
+
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
+```
