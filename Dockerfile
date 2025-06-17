@@ -1,8 +1,11 @@
 FROM php:8.1-fpm
 
-# Install system dependencies
+# Install system dependencies, including libsqlite3-dev
 RUN apt-get update && apt-get install -y \
-    libzip-dev zip unzip curl libonig-dev libpng-dev libjpeg-dev libfreetype6-dev
+    libzip-dev zip unzip curl libonig-dev libpng-dev libjpeg-dev libfreetype6-dev libsqlite3-dev
+
+# Configure zip extension explicitly (recommended)
+RUN docker-php-ext-configure zip
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_sqlite mbstring zip exif pcntl
@@ -15,7 +18,7 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . .
 
-# Install PHP deps & optimize
+# Install PHP dependencies & optimize autoloader
 RUN composer install --no-dev --optimize-autoloader
 
 # Generate app key
